@@ -56,8 +56,8 @@ class StripeOauth < Struct.new( :user )
   # Upon redirection back to this app, we'll have
   # a 'code' that we can use to get the access token
   # and other details about our connected user.
-  # See app/controllers/users_controller.rb#confirm for counterpart.
-  # 変更!See app/controllers/stripe_controller.rb#confirm for counterpart.
+  # See app/controllers/stripe_controller.rb#confirm for counterpart.
+  # https://stripe.com/docs/connect/standalone-accounts
   def verify!( code )
     data = client.get_token( code, {
       headers: {
@@ -65,6 +65,7 @@ class StripeOauth < Struct.new( :user )
       }
     } )
 
+    # user modelへsave
     user.stripe_user_id = data.params['stripe_user_id']
     user.stripe_account_type = 'oauth'
     user.publishable_key = data.params['stripe_publishable_key']

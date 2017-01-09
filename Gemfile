@@ -15,6 +15,7 @@ gem 'devise'
 gem 'toastr-rails'
 gem 'omniauth-facebook'
 gem "paperclip", "~> 5.0.0.beta1"
+gem 'dropzonejs-rails'
 
 
 

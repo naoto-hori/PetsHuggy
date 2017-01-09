@@ -1,15 +1,16 @@
 class ReservationsController < ApplicationController
-    before_action :authenticate_user!
+  
+  def create
+    @reservation = current_user.reservations.create(reservation_params)
 
-    def create
-        @reservation = current_user.reservations.create(reservation_params)  
+    redirect_to @reservation.listing, notice:"予約が完了しました"
+  end
 
-        redirect_to @reservation.listing, notice: "予約が完了しました。" 
+  private
+    def reservation_params
+      params.require(:reservation).permit(:start_date, :end_date, :price_pernight, :total_price, :listing_id)
     end
 
 
-    private
-        def reservation_params
-            params.require(:reservation).permit(:start_date, :end_date, :price_pernight, :total_price, :listing_id)
-        end
+
 end

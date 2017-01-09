@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :listings do 
-    resources :reservations, only: [:create]
+    resources :reservations, only: [:new, :create]
   end
 
   get '/setdate' => 'reservations#setdate'
@@ -30,5 +30,11 @@ Rails.application.routes.draw do
   get 'manage-listing/:id/calendar' => 'listings#calendar', as: 'manage_listing_calendar'
   get 'manage-listing/:id/bankaccount' => 'listings#bankaccount', as: 'manage_listing_bankaccount'
   get 'manage-listing/:id/publish' => 'listings#publish', as: 'manage_listing_publish'
+
+  #stripe connect oauth path
+  get '/connect/oauth' => 'stripe#oauth', as: 'stripe_oauth'
+  get '/connect/confirm' => 'stripe#confirm', as: 'stripe_confirm'
+  get '/connect/deauthorize' => 'stripe#deauthorize', as: 'stripe_deauthorize'
+  
 end
 

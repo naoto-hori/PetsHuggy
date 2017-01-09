@@ -19,6 +19,7 @@
                         <div class="form-group">
                             <%= f.text_area :body, placeholder: "Write your messages here", class: "form-control" %>
                         </div>
+
                         <%= f.hidden_field :user_id, value: current_user.id %>
 
                         <div class="actions">
@@ -29,7 +30,6 @@
             </div>
             
             <div id="chat"> 
-            <!-- 部分テンプレートにローカル変数を渡す -->
                 <%= render @messages %>
             </div>
         </div>

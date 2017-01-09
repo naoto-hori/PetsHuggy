@@ -9,6 +9,10 @@ class PagesController < ApplicationController
       @latitude = params["lat"]
       @longitude = params["lng"]
 
+      geolocation = [@latitude,@longitude]
+
+      @listings = Listing.where(active: true).near(geolocation, 1, order: 'distance')
+
     # 検索欄が空欄の場合
     else
 

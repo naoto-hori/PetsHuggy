@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'pages/index'#pagesコントローラーのindexアクションを実行するurlを作成
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

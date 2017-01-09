@@ -63,6 +63,7 @@ class ReservationsController < ApplicationController
       amount = params[:reservation][:total_price]
 
       # Calculate the fee amount that goes to the application.
+      # docs https://stripe.com/docs/connect/payments-fees
       begin
         charge_attrs = {
           amount: amount,
@@ -71,11 +72,11 @@ class ReservationsController < ApplicationController
           description: "Test Charge via Stripe Connect"
         }
 
-      # Use the platform's access token, and specify the
-      # connected account's user id as the destination so that
-      # the charge is transferred to their account.
-      charge_attrs[:destination] = user.stripe_user_id
-      charge = Stripe::Charge.create( charge_attrs )
+        # Use the platform's access token, and specify the
+        # connected account's user id as the destination so that
+        # the charge is transferred to their account.
+        charge_attrs[:destination] = user.stripe_user_id
+        charge = Stripe::Charge.create( charge_attrs )
 
         #have to edit view template to show html in flash
         flash[:notice] = "Charged successfully!"

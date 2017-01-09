@@ -2,7 +2,6 @@ class Listing < ActiveRecord::Base
   belongs_to :user
   has_many :photos
   has_many :reservations
-  has_many :reviews
 
   #必須項目
   validates :home_type, presence: true
@@ -12,8 +11,4 @@ class Listing < ActiveRecord::Base
 
   geocoded_by :address
   after_validation :geocode, :if => :address_changed?
-  
-  def average_star_rate
-    reviews.count == 0 ? 0 : reviews.average(:rate).round(1)
-  end
 end

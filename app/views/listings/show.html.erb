@@ -82,7 +82,7 @@
                         </div>
                         
                         <div class="panel-body panel-real">         
-                            <%= form_for [@listing, @listing.reservations.new], url: new_listing_reservation_path(@listing), html: {method: "get"} do |f| %>       
+                            <%= form_for [@listing, @listing.reservations.new] do |f| %>       
                                            
                                 <!-- これは、予約をするときに、一緒におくる、データです。-->
                                 <%= f.hidden_field :listing_id, value: @listing.id %>
@@ -139,7 +139,7 @@
                                 </div>        
 
                                 <div class="actions text-center">
-                                    <%= f.submit "この日程で予約する", class: "btn btn-danger btn-wide",disabled:true %>
+                                    <%= f.submit "この日程で予約する", class: "btn btn-danger btn-wide" %>
                                 </div>
                             <% end %>
                         </div>
@@ -165,18 +165,15 @@
     </div>  
 
 
-    <!-- レビュー     -->
-    <div class="row row-space-4">
-      <div class="col-md-9">
-        <h3 class="row-space-3">レビュー<%= @reviews.count %>件</h3>
-        <div id="average_star_rate"></div>
-          <%= render 'reviews/form' if @currentUserBooking && !@currentUserReview %>
-          <%= render 'reviews/list' %>
-      </div>
+    <!-- レビュー    -->
+    <div class="row">
+        <div class="col-md-9">
+            <h3 class="row-space-3">レビュー</h3>
+        </div>
 
-      <div class="col-md-3">
-      
-      </div>
+        <div class="col-md-3">
+        
+        </div>
     </div>
 
     <!-- google map    -->
@@ -424,4 +421,3 @@ $(function() {
   });
 });
 </script>
-

@@ -28,8 +28,59 @@ class PagesController < ApplicationController
 
     end
 
-    #リスティングデータを配列にしてまとめる 
-    @arrlistings = @listings.to_a
+    # Ransack q のチェックボックス一覧
+    if params[:q].present? 
+
+      if params[:q][:price_pernight_gteq].present?
+        session[:price_pernight_gteq] = params[:q][:price_pernight_gteq]
+      else
+        session[:price_pernight_gteq] = nil
+      end
+
+      
+      if params[:q][:price_pernight_lteq].present?
+        session[:price_pernight_lteq] = params[:q][:price_pernight_lteq]
+      else
+        session[:price_pernight_lteq] = nil
+      end
+
+      if params[:q][:home_type_eq_any].present?
+        session[:home_type_eq_any] = params[:q][:home_type_eq_any]
+        session[:House] = session[:home_type_eq_any].include?("一軒家")
+        session[:Mansion] = session[:home_type_eq_any].include?("マンション")
+        session[:Apartment] = session[:home_type_eq_any].include?("アパート")
+      else
+        session[:home_type_eq_any] = ""
+        session[:House] = false
+        session[:Mansion] = false
+        session[:Apartment] = false
+      end
+
+      if params[:q][:pet_type_eq].present?
+        session[:pet_type_eq] = params[:q][:pet_type_eq]
+      else
+        session[:pet_type_eq] = nil
+      end
+
+
+      if params[:q][:breeding_years_gteq].present?
+        session[:breeding_years_gteq] = params[:q][:breeding_years_gteq]
+      else
+        session[:breeding_years_gteq] = nil
+      end
+
+    end 
+
+    # Q条件をまとめたものをセッションQに入れる
+    session[:q] = {"price_pernight_gteq"=>session[:price_pernight_gteq], "price_pernight_lteq"=>session[:price_pernight_lteq],  "home_type_eq_any"=>session[:home_type_eq_any], "pet_type_eq"=>session[:pet_type_eq], "breeding_years_gteq"=>session[:breeding_years_gteq]}
+
+
+    # ransack検索
+    @search = @listings.ransack(session[:q])
+    @result = @search.result(distinct: true)
+
+     #リスティングデータを配列にしてまとめる 
+    @arrlistings = @result.to_a
 
     # start_date end_dateの間に予約がないことを確認.あれば削除
     if ( !params[:start_date].blank? && !params[:end_date].blank? )

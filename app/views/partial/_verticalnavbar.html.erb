@@ -83,7 +83,6 @@ $(function(){
 
   // notcheckedがあるなら、残り〜と表示して、違うなら、公開するを押せるようにする。
   if(notchecked > 0){
-    $('#not-checked').val(notchecked);
     $("li#nav-publish a").text("残り"+ notchecked +"ステップ");
     $("li#nav-publish a").removeAttr("href");
   }else{

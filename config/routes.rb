@@ -47,6 +47,8 @@ Rails.application.routes.draw do
   get '/not_checked' => 'listings#not_checked'
 
   get '/search' => 'pages#search'
+
+  get '/ajaxsearch' => 'pages#ajaxsearch'
   
 end
 
